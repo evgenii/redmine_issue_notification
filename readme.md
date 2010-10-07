@@ -10,11 +10,16 @@ Issue notification is redmine plugin that send notification to watchers about du
 
 ## Sends notification
 To send notification add crontab for run rake task 'rake issue_notification:send'
+
 Example:
+
 > crontab -e
+
 choose text editor, then insert code
+
 > SHELL=/bin/bash
 > 0 7 * * * cd /full/path/to/your/rails/application && rake issue_notification:send &> /tmp/cron_issue_notification.log
+
 save it and crone will automatic starting 
 
 To start/stop/restart cron (on debian) use:
