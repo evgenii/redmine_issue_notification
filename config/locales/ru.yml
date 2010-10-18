@@ -1,0 +1,12 @@
+ru:
+  field_send_notification: "Включить напоминания"
+  field_warning_notification: "Напоминать за, день(ей)"
+  field_on_date_notification: "Напомнить"
+  
+  warning_notification: "Напоминать за, день(ей)"
+  on_date_notification: "Напомнить"
+  
+  mail_subject_notifier_reminder: "Задача {{issue}} истекает через {{days}} день(ей)"
+  mail_body_notifier_reminder: "Задача за которой вы наблюдаете {{issue}} должна быть выполнена через {{days}} день(ей)"
+
+  label_show_notifier_issue: "Перейти к задаче"

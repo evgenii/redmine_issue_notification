@@ -1,0 +1,11 @@
+<p><%= form.check_box :send_notification, :onClick => "$('notification_attributes').toggle()" %></p>
+<div class="attributes" id="notification_attributes" 
+  style="display:<%= issue.send_notification ? 'block' : 'none' %>">
+  
+  <div class="splitcontentleft"><p><%= form.text_field :warning_notification, :size => 3 %></p></div>
+  <div class="splitcontentright">
+    <p><%= form.text_field :on_date_notification, :size => 10 %>
+    <%= calendar_for('issue_on_date_notification') %></p>
+  </div>
+  <div style="clear: both;"> </div>
+</div>

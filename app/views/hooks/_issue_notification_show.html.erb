@@ -1,0 +1,10 @@
+<% if issue.send_notification -%>
+<tr>
+    <th><%= l(:warning_notification)%>:</th>
+    <td><%= issue.warning_notification %></td>
+    <% unless issue.on_date_notification.nil? -%>
+    <th><%= l(:on_date_notification)%>:</th>
+    <td><%= format_date( issue.on_date_notification ) %></td>
+    <% end -%>
+</tr>
+<% end -%>

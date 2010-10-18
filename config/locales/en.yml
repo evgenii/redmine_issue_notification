@@ -1,0 +1,14 @@
+# English strings go here
+en:
+  field_send_notification: "Send notification"
+  field_warning_notification: "Warning notification, day(s)"
+  field_on_date_notification: "On date notification"
+  
+  send_notification: "Send notification"
+  warning_notification: "Warning notification, day(s)"
+  on_date_notification: "On date"
+  
+  mail_subject_notifier_reminder: "Issue {{issue}} due in the next {{days}} days"
+  mail_body_notifier_reminder: "Issue {{issue}} where you is watcher are due in the next {{days}} days"
+
+  label_show_notifier_issue: "View issue"

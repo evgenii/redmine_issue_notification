@@ -1,0 +1,12 @@
+uk:
+  field_send_notification: "Увімкнути нагадування"
+  field_warning_notification: "Нагадати за, день(ів)"
+  field_on_date_notification: "Нагадати"
+  
+  warning_notification: "Нагадати за, день(ів)"
+  on_date_notification: "Нагадати"
+  
+  mail_subject_notifier_reminder: "Питання {{issue}} спливає через {{days}} день(ів)"
+  mail_body_notifier_reminder: "Питання за яким ви слідкуєте {{issue}} повинне бути виконане через {{days}} день(ів)"
+
+  label_show_notifier_issue: "Перейти до питання"
