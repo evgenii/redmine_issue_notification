@@ -22,7 +22,27 @@ module Plugin
     end
 
     module Issue
+      
+      module InstanceMethods
+        #Returns an array with all the emails of the people involved in 
+        #the issue
+        #Watchers, Issue creator, Assignee(s)
+        def get_emails
+          receivers  = watchers.collect{ |i| i.user.mail }
+          receivers << author.mail
+          if   assigned_to.is_a?(User)
+          #Assigned to a user
+            receivers << assigned_to.mail
+          elsif assigned_to.is_a?(Group)
+          #Issue is assigned to a group (Redmine 1.3.0)     
+            receivers << assigned_to.users.collect(&:mail)
+          end
+          receivers   
+        end   
+      end
+
       def self.included(receiver)
+        receiver.send :include, InstanceMethods 
         receiver.class_eval do
           unloadable
           #Add has_many relation to notifications  
@@ -32,4 +52,4 @@ module Plugin
     end
 
   end
-end      
+end     

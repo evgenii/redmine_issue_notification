@@ -19,7 +19,8 @@ namespace :issue_notification do
         else
           str_days_left = "-"
         end 
-        NotificationMailer.deliver_notification_reminder(issue.watchers, issue, str_days_left )
+#        NotificationMailer.deliver_notification_reminder(issue.watchers, issue, str_days_left )
+         NotificationMailer.deliver_notification_reminder(issue, str_days_left)
       end
     end       
   end

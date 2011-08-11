@@ -15,9 +15,11 @@ class NotificationMailer < ActionMailer::Base
     { :host => h, :protocol => Setting.protocol }
   end
   
-  def notification_reminder(watchers, issue, days)
-    set_language_if_valid Setting.default_language
-    recipients watchers.collect{ |i| i.user.mail }
+  def notification_reminder(issue, days)
+   
+   set_language_if_valid Setting.default_language
+   recipients issue.get_emails
+
     @issue_name = "#{issue.project} - #{issue.tracker} ##{issue.id}"
     subject l(:mail_subject_notifier_reminder, :issue => @issue_name, :days => days)
     body :issue => issue, :days => days,
