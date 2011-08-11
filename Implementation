@@ -1,0 +1,49 @@
+<tudor.cornea@gmail.com>
+---------------------------------
+Description of the implementation
+---------------------------------
+
+I have created a separate model (IssueNotification), to
+hold the notification info (start_date, end_date, and repeat_interval).
+
+There is a one-to-many relation between Issue and IssueNotification,
+implemented by the use of a patch inside /lib/redmine_issue_notifications/patch_redmine_classes.
+
+The notifications are shown in the "Issue show" menu, instead of the "New Issue" tab.
+
+The current supported notifications are:
+
+=Single Notification (Will be deleted after first notification)
+=Repeated notifications
+==+ with an ending date
+==+ without an ending date
+
+From the interface, the user can choose the notification start_date either as a date, 
+by selecting it from a calendar, or as a number of days before the issue due_date.
+The second option will appear only if a due date is specified for the issue.
+
+The ending date can be chosen either as a date, from a calendar, or by selecting a number of events, until
+the notification expires.
+In the latter case, the end date is calculated, from the repeat parameters, and from the number of events until expire.
+
+The internal format for storing the repeat_interval is similar to cron: "Days/Weeks/Months/Years"
+
+The plugin uses the :add_issue permission for its actions.
+A user who does not have these permissions will not be able to add notifications.
+
+The plugin does not support editing of an existing notification. If the user wishes to modify a notification, he
+will need to delete , and add it again.
+
+The notifications are effectively sent by the script "send_notification.rake" inside /lib/tasks.
+
+The script has 3 tasks:
+:send 
+:clean_expired_notifications
+:clean_invalid_notifications (Used for debugging)
+ 
+Tested with:
+
+Redmine 1.2.0(Bitnami) ,Mysql
+Redmine 1.2.1 stable   ,Mysql
+
+

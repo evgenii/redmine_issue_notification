@@ -1,0 +1,128 @@
+<script language="javascript">
+  /**
+    Inverts the selected value of a given checkbox
+    @param element
+      A html checkbox element, given as a string
+  */
+  function invertCheckBox(element)
+  {
+    if ($(element).checked == true) 
+      { $(element).checked = false } 
+    else 
+      { $(element).checked = true }
+  }  
+
+  /**
+    Set check property to true for a checkbox
+  */
+  function setChecked(element)
+  {
+    $(element).checked = true 
+  }  
+
+ /**
+    Set check property to false for a checkbox
+  */
+  function setUnchecked(element)
+  {
+    $(element).checked = false 
+  }  
+
+  /**
+    Enables a html element
+  */
+  function setEnabled(element)
+  {
+    $(element).disabled = false 
+  }  
+
+  /**
+    Disables a html element
+  */
+  function setDisabled(element)
+  {
+    $(element).disabled = true 
+  }  
+</script>
+
+<!-- Display error messages (AJAX) -->
+<%= error_messages_for :notification %>
+
+<!-- User can choose the inverval at which the notification is triggered,
+       and the ending date, if any  -->
+<div class="splitcontentright">
+  <div id="repeat_box" style="display:none; padding-left:140px">
+  <p>
+    <b><%= label_tag :repeat_periods, l(:label_repeats) %></b> 
+    <%= select_tag :repeat_periods, options_for_select(repeat_periods)%>
+
+    <b><%= label_tag :repeat_intervals, l(:label_interval) %></b>
+    <%= select_tag :repeat_intervals, options_for_select((1..30).to_a) %> 
+  </p>
+  </div>
+
+  <!-- Notification end date selection -->
+  <div class="tabular" id="notification_ends" style="display:none">
+    <p>
+      <b><%= label_tag :end_date_type_date, l(:label_on_date) %></b> 
+      <%= radio_button_tag :end_date_type, :date, true, :onClick => 'setDisabled("notification_events_until_expire"); setEnabled("notification_end_date");'%>
+
+      <%= text_field_tag :notification_end_date, '', :size => 10 %>
+      <%= calendar_for :notification_end_date %>
+    </p>
+
+    <p>
+      <b><%= label_tag :end_date_type_expire, l(:label_after) %></b> 
+      <%= radio_button_tag :end_date_type, :expire, false, :onClick => 'setDisabled("notification_end_date"); setEnabled("notification_events_until_expire");'%>
+
+      <%= text_field_tag :notification_events_until_expire, '0', :size => 3, :disabled => true %>
+      <b><%= l(:label_notifications_small_case) %></b> 
+    </p>
+  </div>
+
+</div>
+
+
+
+<!-- User can choose the beginning date of the notification and if the
+     notification repeats --> 
+<div class="tabular" >
+  <p>
+    <%= label_tag :start_date_type_date, l(:label_start_date) %>
+    <%= radio_button_tag :start_date_type, :date , true, :onClick => 'setDisabled("notification_days_before"); setEnabled("notification_start_date");' %> 
+
+    <%= text_field_tag :notification_start_date, '', :size => 10%>
+    <%= calendar_for :notification_start_date %> 
+  </p>
+  <!-- If the due_date field of the current issue is set, the user
+       can choose the end date in terms of days before due_date -->
+  <% unless @issue.due_date.blank? %>
+    <p> 
+      <b><%= label_tag :start_date_type_days_before, "#{l(:label_days_before)}" %></b>
+      <%= radio_button_tag :start_date_type, :days_before , false, :onClick => 'setEnabled("notification_days_before"); setDisabled("notification_start_date");' %> 
+      
+      <%= text_field_tag :notification_days_before , '0',  :size => 3 , :disabled => true %>
+      <b><%="(#{@issue.due_date})"%></b>
+    </p>
+  <% end %>
+
+  <!-- User can choose to repeat the notification-->
+  <p>
+    <b><%= label_tag :repeat_notification , l(:label_repeats) %></b>
+    <%= check_box_tag :repeat_notification, "Yes", false, :onClick => 'Element.toggle("repeat_box"); Element.toggle("end_checkbox"); setUncheckedrepeat("end_notification");' %>
+  </p>
+
+  <div id="end_checkbox" style="display:none;">
+  <p>
+    <%= check_box_tag :end_notification, "Yes", false, :onClick => 'Element.toggle("notification_ends");' %>
+    <b><%= label_tag :end_notification, l(:label_notification_ends) %></b>  
+  </p> 
+  </div>
+
+</div>
+<div style="clear: both;"> </div>
+
+<%= submit_tag l(:button_add) %>
+<%= toggle_link l(:button_cancel), 'new-notification-form'%>
+
+

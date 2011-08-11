@@ -1,0 +1,8 @@
+<% if @notifications.present? || User.current.allowed_to?(:add_issues, @project) %>
+  <hr />
+  <div id="notifications">
+    <%= render :partial => 'notifications/issue_notifications' %>
+  </div>
+<% end %>
+
+
