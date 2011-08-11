@@ -1,22 +1,55 @@
 namespace :issue_notification do
+   
+  ### Helper methods ### 
 
-  desc "Check issue and send notification"
-  task :send => :environment do
-    Issue.find_each( :conditions => [ "send_notification = true and done_ratio < ? and ( due_date > ? or on_date_notification > ? )", 100, 0, 0 ],  
-      :batch_size => 100 ) do |issue|
+  #Checks to see if there are any due notifications for
+  #an issue, and then sends the emails
+  def send_notifications(issue)
+  
+    Rails.logger.info "[Sending notifications for #{issue.to_s}]"
+    notifications = issue.issue_notifications.select{ 
+                   |nt| !nt.notif_start_date.nil? and nt.notif_start_date <= Date.today }  
 
-      dates = issue.warning_notification.day.from_now.to_date
-      if !issue.closed? and  
-        ( ( !issue.on_date_notification.nil? and issue.on_date_notification <= dates ) or
-        ( !issue.due_date.nil? and issue.due_date <= dates ) )
-
-        issue_date = !issue.on_date_notification.nil? ? issue.on_date_notification : issue.due_date
-        days = (issue_date.to_date - DateTime.now.to_date).to_i
-        str_days_left = days <= 0 ? "0" : days.to_s
-        NotificationMailer.deliver_notification_reminder( issue.watchers, issue, str_days_left )
+    notifications.each do |nt|         
+      if nt.is_due?
+        Rails.logger.info "[Sending notification #{nt.inspect}]"
+        unless issue.due_date.nil? 
+          days = (issue.due_date.to_date - Date.today).to_i
+          str_days_left = days <= 0 ? "0" : days.to_s
+        else
+          str_days_left = "-"
+        end 
+        NotificationMailer.deliver_notification_reminder(issue.watchers, issue, str_days_left )
       end
-    end
+    end       
   end
 
+  ### Rake Tasks ###
+
+  desc "Clean up any invalid notifications"
+  task :clean_invalid_notifications => :environment do
+    IssueNotification.clean_invalid_notifications
+  end
+
+  desc "Clean up any expired notifications"
+  task :clean_expired_notifications => :environment do
+    IssueNotification.clean_expired_notifications
+  end
+
+  desc "Check issues and send notification messages"
+  task :send => [:clean_expired_notifications ] do
+
+    Rails.logger.info "[Sending notifications]"
+
+    #Select all issues that are not closed, have a done ratio under 100,
+    #and have notifications associated with them
+    @issues = Issue.all.select{ |is| is.issue_notifications.present? and
+                                 is.done_ratio < 100 and !is.closed? }
+
+    @issues.each { |issue| send_notifications(issue) }
+
+    Rails.logger.info "[Finished sending notifications]"
+  end
+  
 end
 

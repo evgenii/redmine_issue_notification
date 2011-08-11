@@ -8,7 +8,27 @@ en:
   warning_notification: "Warning notification, day(s)"
   on_date_notification: "On date"
   
-  mail_subject_notifier_reminder: "Issue {{issue}} due in the next {{days}} days"
-  mail_body_notifier_reminder: "Issue {{issue}} where you is watcher are due in the next {{days}} days"
+  mail_subject_notifier_reminder: "Issue {{issue}} is due in the next {{days}} days"
+  mail_body_notifier_reminder: "Issue {{issue}} where you are watcher is due in the next {{days}} days"
 
   label_show_notifier_issue: "View issue"
+
+#
+  field_notif_start_date: "Start date"
+  field_notif_end_date: "End date"
+  field_invalid_value: "Invalid value for field"
+ 
+  label_notifications: "Notifications" 
+  label_notifications_small_case: "notifications"
+  label_start_date: "First notification date"
+  label_end_date: "Last notification date"
+  label_repeats: "Repeat"
+  label_interval: "Interval"
+  label_notification_ends: "Ends "
+  label_on_date: "On date"
+  label_after: "After"
+  label_days_before: "Days before due date"
+  
+  error_end_date_smaller: "can't be smaller than start date"  
+  error_end_date_repeat_null: "and repeat_interval can't be both null"
+
