@@ -24,9 +24,10 @@ class IssueNotification < ActiveRecord::Base
       end
 
 #     Refuse to validate when start date has expired
-#      if !notif_start_date.nil? and notif_start_date < Date.today
-#	  errors.add :notif_start_date, l(:error_already_expired)
-#      end
+      if !notif_start_date.nil? and 
+          notif_start_date < Date.today and repeat_interval.nil?
+	  errors.add :notif_start_date, l(:error_already_expired)
+      end
     end
   end
 
