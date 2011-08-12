@@ -43,9 +43,10 @@ class NotificationsController < ApplicationController
       if params[:end_notification].eql?('Yes') 
         #If the end of the notification is given either as a date, or 
         #as a number of events until it expires
-
-        nr_repeats     = Integer( params[:notification_events_until_expire] )
-        raise ArgumentError if nr_repeats <= 0 
+        if params[:end_date_type].eql?('expire')
+          nr_repeats     = Integer( params[:notification_events_until_expire] )
+          raise ArgumentError if nr_repeats <= 0 
+        end 
         @notification.notif_end_date = case end_date_type
           when "date"   then Date.parse(params[:notification_end_date])
           when "expire" then IssueNotification.calc_end_date(

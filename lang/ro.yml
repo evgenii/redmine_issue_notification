@@ -1,0 +1,28 @@
+# English strings go here
+#ățîș
+en:
+  
+  mail_subject_notifier_reminder: "Issue {{issue}} se încheie în următoarele  {{days}} zile"
+  mail_body_notifier_reminder: "Issue {{issue}} se încheie în următoarele {{days}} zile"
+
+#
+  field_notif_start_date: "Data inceput"
+  field_notif_end_date: "Data sfarsit"
+  field_invalid_value: "Valoare incorectă"
+ 
+  label_notifications: "Notificări" 
+  label_notifications_small_case: "notificări"
+  label_start_date: "Incepe"
+  label_end_date: "Se termină"
+  label_repeats: "Repetă"
+  label_interval: "Interval"
+  label_notification_ends: "Se termină "
+  label_on_date: "La data"
+  label_after: "După"
+  label_days_before: "Zile înainte de termen"
+  
+  error_end_date_smaller: "nu poate fi mai mică decat data de început"  
+  error_end_date_repeat_null: "și interval_de_repetare nu pot fi ambele null"
+  error_already_expired: " a expirat deja"
+
+
